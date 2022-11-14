@@ -1,5 +1,5 @@
 const express = require('express');
-const isAuthenticated = require("../middleware/member-auth")
+const isLoggedIn = require("../middleware/member-auth")
 
 //Creating express router
 const memberRoute = express.Router();
@@ -13,6 +13,6 @@ memberRoute.post("/register", createMember);
 memberRoute.post('/login', memberLogin)
 
 //Creating member routes to fetch members data
-memberRoute.get('/member', isAuthenticated, getMember)
+memberRoute.get('/member/:id', isLoggedIn, getMember)
 
 module.exports = memberRoute;

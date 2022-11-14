@@ -11,7 +11,6 @@ const isLoggedIn = async (req, res, next) => {
   }
   try {
     const verifiedUser = jwt.verify(token, SECRET_KEY);
-    // req.user = verifiedUser;
     req.user = memberModel.findById(verifiedUser.id);
   } catch (err) {
     return res.status(401).send("Invalid Token");

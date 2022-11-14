@@ -57,7 +57,7 @@ exports.memberLogin = async (req, res) => {
         const token = await jwt.sign({ id: memberExist._id }, SECRET_KEY, {
             expiresIn: JWT_EXPIRE,
         });
-        return res.cookie({ "token": token }).json({ success: true, message: 'LoggedIn Successfully' })
+        return res.cookie({ "token": token }).json({ success: true, message: 'LoggedIn Successfully', token: token, id: memberExist._id  })
     } catch (error) {
         return res.json({ error: error });
     }
@@ -65,7 +65,7 @@ exports.memberLogin = async (req, res) => {
 
 exports.getMember = async (req, res) => {
     try {
-        const member = await memberModel.find();
+        const member = await memberModel.findById(req.params.id);
         if (!member) {
             return res.json({ message: 'No member found' })
         }

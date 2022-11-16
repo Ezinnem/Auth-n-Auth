@@ -19,11 +19,12 @@ exports.createMember = async (req, res) => {
             return res.json({ message: 'Please enter all the details correctly' })
         }
 
-        //Check if the member already exist or not
+        //Check if the member already exists
         const memberExist = await memberModel.findOne({ email: req.body.email });
         if (memberExist) {
-            return res.json({ message: 'The member already exist with the given email address' })
+            return res.json({ message: 'The member already exist with the email address' })
         }
+
         //Hash the password
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(req.body.password, salt);
@@ -42,19 +43,20 @@ exports.createMember = async (req, res) => {
 exports.memberLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
-        //Check emptyness of the incoming data
+        
+        //Check if the details are empty
         if (!email || !password) {
-            return res.json({ message: 'Please enter all the details correctly' })
+            return res.json({ message: 'Please check the details entered' })
         }
-        //Check if the member already exist or not
+        //Check if the member already exists
         const memberExist = await memberModel.findOne({ email: req.body.email });
         if (!memberExist) {
             return res.json({ message: 'Wrong credentials' })
         }
-        //Check password match
+        //Check for the password match
         const isPasswordMatched = await bcrypt.compare(password, memberExist.password);
         if (!isPasswordMatched) {
-            return res.json({ message: 'Wrong credentials has been entered.' });
+            return res.json({ message: 'Wrong details entered.' });
         }
         const token = await jwt.sign({ id: memberExist._id }, SECRET_KEY, {
             expiresIn: JWT_EXPIRE,

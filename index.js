@@ -1,7 +1,7 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+require('dotenv').config();
+
 const memberRoute  = require("./routes/member-routes")
 
 //Creating an app from express
@@ -18,9 +18,6 @@ mongoose.connect(DB, {
 
 //Using express.json to get request of json data
 app.use(express.json());
-
-//Configuring cookie-parser for the loggin middleware
-app.use(cookieParser());
 
 //Using the routes from the file imported above
 app.use('/api', memberRoute);

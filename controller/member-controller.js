@@ -1,6 +1,8 @@
 //Requiring all the necessary files and libraries
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 const memberModel = require('../model/member-model');
 
 const SECRET_KEY = process.env.SECRET_KEY || "Secr3T_Key";

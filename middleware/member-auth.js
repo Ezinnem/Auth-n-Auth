@@ -1,7 +1,8 @@
 const memberModel = require('../model/member-model');
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
-const SECRET_KEY = "Secr3T_Key";
+const SECRET_KEY = process.env.SECRET_KEY || "Secr3T_Key";
 
 exports.isLoggedIn = async (req, res, next) => {
   const token = req.body.token || req.query.token || req.headers["x-access-token"];

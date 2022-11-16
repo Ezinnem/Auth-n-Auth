@@ -23,7 +23,7 @@ exports.isAdmin = async (req, res, next) => {
 
   const user = await memberModel.findById(req.params.id);
   if (user.userType != 'admin') {
-    return res.status(403).send("You must be an admin or a super-admin to acess this route");
+    return res.status(403).send("You must be an admin to acess this route");
   } else {
     return next();
   }
